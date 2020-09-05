@@ -26,7 +26,7 @@ deploy:
   provider: script
   script: bash deploy.sh
   on:
-    branch: develop4
+    branch: develop
     
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
