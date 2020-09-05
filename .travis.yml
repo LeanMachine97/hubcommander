@@ -16,14 +16,20 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
+  - py.test -s tests
   - py.test --cov=tests tests/
   - coverage xml
-  
+  - ./build_docker.sh
+
+deploy:
+  # Build Docker container and push to Docker Hub
+  provider: script
+  script: bash deploy.sh
+  on:
+    branch: develop4
+    
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-  
-after_successful:
-  - docker build -t leanmachine97/hubcommander .
 
 services:
   - docker
